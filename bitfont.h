@@ -23,8 +23,9 @@ struct bit_letter {
 // you define the function before it is used, hence this redundant line of code 
 bit_letter GetBitLtterTopAndBottomHalf (char Letter);
 
-// Keep in mind, when this gets the letter image data, it will malloc an 8x8x4 block of memory
-// it will not free that memory
+// This is the function you can use to get the letter as 32bit color data
+// When this gets the letter image data, it will malloc an 8x8x4 block of memory
+// it will not free that memory automatically
 uint8_t* GetBitLetter(char Letter, uint32_t Color) {
     bit_letter TopAndBottomHalf = GetBitLtterTopAndBottomHalf(Letter);
     uint32_t TopHalf = TopAndBottomHalf.TopHalf;
@@ -1018,7 +1019,6 @@ bit_letter GetBitLtterTopAndBottomHalf (char Letter) {
                           |(0b11111110 << 24));
         }
     }
-	
 	Result.TopHalf = TopHalf;
 	Result.BottomHalf = BottomHalf;
 	return Result;
