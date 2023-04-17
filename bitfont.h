@@ -19,13 +19,44 @@ struct bit_letter {
     uint32_t BottomHalf;
 };
 
+// C/C++ makes you have to declare that a function exists before you can use it unless
+// you define the function before it is used, hence this redundant line of code 
+bit_letter GetBitLtterTopAndBottomHalf (char Letter);
+
 // Keep in mind, when this gets the letter image data, it will malloc an 8x8x4 block of memory
 // it will not free that memory
 uint8_t* GetBitLetter(char Letter, uint32_t Color) {
-    
-    uint32_t TopHalf;
-    uint32_t BottomHalf;
-    switch(Letter){
+    bit_letter TopAndBottomHalf = GetBitLtterTopAndBottomHalf(Letter);
+	uint32_t TopHalf = TopAndBottomHalf.TopHalf;
+	uint32_t BottomHalf = TopAndBottomHalf.BottomHalf;
+    uint8_t *LetterData = (uint8_t *)malloc(8*8*4);
+    uint32_t *LetterPointer = (uint32_t *)LetterData;
+    // Top half of letter
+    for(int i=0; i < 32; i++) {
+        if(TopHalf & 0x01) {
+            *LetterPointer++ = Color;
+        } else {
+            *LetterPointer++ = 0;
+        }
+        TopHalf = TopHalf >> 1;
+    }
+    // Bottom half of letter
+    for(int i=0; i < 32; i++) {
+        if(BottomHalf & 0x01) {
+            *LetterPointer++ = Color;
+        } else {
+            *LetterPointer++ = 0;
+        }
+        BottomHalf = BottomHalf >> 1;
+    }
+    return LetterData;
+}
+
+bit_letter GetBitLtterTopAndBottomHalf (char Letter) {
+	bit_letter Result = {};
+	uint32_t TopHalf;
+	uint32_t BottomHalf;
+	 switch(Letter){
         case ' ': {
             TopHalf     = ((0b00000000 << 0)
                           |(0b00000000 << 8)
@@ -987,25 +1018,8 @@ uint8_t* GetBitLetter(char Letter, uint32_t Color) {
                           |(0b11111110 << 24));
         }
     }
-    uint8_t *LetterData = (uint8_t *)malloc(8*8*4);
-    uint32_t *LetterPointer = (uint32_t *)LetterData;
-    // Top half of letter
-    for(int i=0; i < 32; i++) {
-        if(TopHalf & 0x01) {
-            *LetterPointer++ = Color;
-        } else {
-            *LetterPointer++ = 0;
-        }
-        TopHalf = TopHalf >> 1;
-    }
-    // Bottom half of letter
-    for(int i=0; i < 32; i++) {
-        if(BottomHalf & 0x01) {
-            *LetterPointer++ = Color;
-        } else {
-            *LetterPointer++ = 0;
-        }
-        BottomHalf = BottomHalf >> 1;
-    }
-    return LetterData;
+	
+	Result.TopHalf = TopHalf;
+	Result.BottomHalf = BottomHalf;
+	return Result;
 }
