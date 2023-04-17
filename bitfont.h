@@ -27,8 +27,8 @@ bit_letter GetBitLtterTopAndBottomHalf (char Letter);
 // it will not free that memory
 uint8_t* GetBitLetter(char Letter, uint32_t Color) {
     bit_letter TopAndBottomHalf = GetBitLtterTopAndBottomHalf(Letter);
-	uint32_t TopHalf = TopAndBottomHalf.TopHalf;
-	uint32_t BottomHalf = TopAndBottomHalf.BottomHalf;
+    uint32_t TopHalf = TopAndBottomHalf.TopHalf;
+    uint32_t BottomHalf = TopAndBottomHalf.BottomHalf;
     uint8_t *LetterData = (uint8_t *)malloc(8*8*4);
     uint32_t *LetterPointer = (uint32_t *)LetterData;
     // Top half of letter
