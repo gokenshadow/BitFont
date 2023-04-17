@@ -14,9 +14,6 @@
 
 // to create the equivalent 32-bit color image data using whatever 32-bit color you choose
 
-
-// Note: it might be better to eventually just do this with a 64-bit variable 
-// instead of to 32 bit variables
 struct bit_letter {
 	uint32_t TopHalf;
 	uint32_t BottomHalf;
