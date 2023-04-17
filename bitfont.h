@@ -15,9 +15,6 @@ struct bit_letter {
     uint32_t TopHalf;
     uint32_t BottomHalf;
 };
-
-// C/C++ makes you have to declare that a function exists before you can use it unless
-// you define the function before it is used, hence this redundant line of code 
 bit_letter GetBitLtterTopAndBottomHalf (char Letter);
 
 // NOTE: When this gets the letter image data, it will malloc an 8x8x4 block of memory
