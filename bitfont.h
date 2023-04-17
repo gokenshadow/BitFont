@@ -1,9 +1,7 @@
 #include <stdint.h>
 
 // This is currently the most simplistic way I can think of do create a basic ASCII font
-
-// This function will use 1-bit color 8x8 letter image data, i.e. something like this:
-        
+// It will use 1-bit color 8x8 letter image data, i.e. something like this:      
 //    1    
 //   1 1   
 //  1   1  
@@ -11,7 +9,6 @@
 // 1     1 
 // 1     1 
 //
-
 // to create the equivalent 32-bit color image data using whatever 32-bit color you choose
 
 struct bit_letter {
@@ -23,9 +20,14 @@ struct bit_letter {
 // you define the function before it is used, hence this redundant line of code 
 bit_letter GetBitLtterTopAndBottomHalf (char Letter);
 
-// This is the function you can use to get the letter as 32bit color data
-// When this gets the letter image data, it will malloc an 8x8x4 block of memory
-// it will not free that memory automatically
+// NOTE: When this gets the letter image data, it will malloc an 8x8x4 block of memory
+// It will not free that memory automatically
+/* Usage eg: 
+
+uint8_t *PointerToLetterImageDataMemory;
+PointerToLetterImageDataMemory = GetBitLetter('A', 0xFFFF00FF);
+
+*/
 uint8_t* GetBitLetter(char Letter, uint32_t Color) {
     bit_letter TopAndBottomHalf = GetBitLtterTopAndBottomHalf(Letter);
     uint32_t TopHalf = TopAndBottomHalf.TopHalf;
